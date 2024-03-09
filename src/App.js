@@ -1,18 +1,11 @@
 import './App.css';
-import {
-    BrowserRouter,
-    Navigate,
-    Route,
-    Routes,
-    useNavigate,
-} from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import New from './pages/New';
 import MyInfo from './pages/MyInfo';
 import Edit from './pages/Edit';
 import Review from './pages/Review';
 function App() {
-    const Navigate = useNavigate();
     return (
         <BrowserRouter>
             <div className="App">
