@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
 }
+
 .home {
     background-color: lightgray;
     width: 100%;
@@ -87,10 +88,32 @@ header .my_info {
 }
 
 .myinfo {
-    width: 768px;
-    justify-content: center;
-    background-color: purple;
+    background-color: lightgray;
 }
+
+.myinfo_wrapper {
+    margin: 10px auto;
+    max-width: 576px;
+    background-color: pink;
+    display: block;
+}
+.myinfo_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-bottom: none;
+}
+.mygraph_section {
+    height: 200px;
+    border: 1px solid black;
+    border-bottom: none;
+}
+.mylist_section {
+    height: 200px;
+    border: 1px solid black;
+}
+
 @media (max-width: 992px) {
     .home {
         background-color: lightpink;
@@ -104,5 +127,8 @@ header .my_info {
 @media (max-width: 576px) {
     .home {
         background-color: lightblue;
+    }
+    .myinfo-wrapper {
+        width: 100%;
     }
 }
