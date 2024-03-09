@@ -1,38 +1,108 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Color+Emoji&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+.home {
+    background-color: lightgray;
+    width: 100%;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+header {
+    padding: 10px 20px 10px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid hotpink;
+    font-family: 'Nanum Gothic Coding';
+}
+header .head_text {
+    font-size: 30px;
+
+    font: bold;
+    color: hotpink;
+    cursor: pointer;
+    padding: 0px 20px 0px 20px;
+    white-space: nowrap; /*버튼 안의 글자가 잘려서 두줄되지않게 하는*/
+    font-family: 'Nanum Pen Script';
+    justify-content: start;
+}
+header .search_keyword {
+    width: 50%;
+    color: gray;
+    padding: 10px 10px 10px 10px;
+    justify-content: center;
+}
+header .my_info {
+    width: 10%;
+    color: hotpink;
+    cursor: pointer;
+    padding: 10px 20px 10px 20px;
+    justify-content: end;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* content list */
+.content_list_wrapper {
+    padding: 10px 20px 10px 20px;
+    overflow: hidden;
+    padding-left: 15px;
+}
+.content_list {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* width: calc(100% - 100px); */
+    /* overflow: initial; */
+    display: flex;
+    flex-shrink: 0;
+    transition: transform 1s;
+    /* justify-content: center; */
+}
+.content {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+    position: relative;
+}
+.MyButton {
+    position: relative;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 40px;
+    top: -235px;
+}
+.Mybutton_prev {
+    justify-content: start;
+    /* left: 0%; */
+}
+.Mybutton_next {
+    /* left: 0%; */
+
+    justify-content: end;
+}
+.button_container {
+    display: flex;
+    justify-content: space-between;
+    width: 98%;
+    align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.myinfo {
+    width: 768px;
+    justify-content: center;
+    background-color: purple;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@media (max-width: 992px) {
+    .home {
+        background-color: lightpink;
+    }
 }
-
-.App-link {
-  color: #61dafb;
+@media (max-width: 768px) {
+    .home {
+        background-color: lightyellow;
+    }
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@media (max-width: 576px) {
+    .home {
+        background-color: lightblue;
+    }
 }
