@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import Search from './Search';
 
-const MyHeader = ({ searchKeyword }) => {
+const MyHeader = () => {
     const navigate = useNavigate();
     return (
         <header>
@@ -10,11 +11,8 @@ const MyHeader = ({ searchKeyword }) => {
             >
                 Starring
             </h1>
-            <input
-                type="text"
-                className="search_keyword"
-                placeholder={searchKeyword}
-            />
+            <Search />
+
             <div
                 className="my_info"
                 onClick={() => navigate('/myInfo')}

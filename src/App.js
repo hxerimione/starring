@@ -15,7 +15,7 @@ function App() {
                         element={<Home />}
                     />
                     <Route
-                        path="/new"
+                        path="/new/:id"
                         element={<New />}
                     />
                     <Route

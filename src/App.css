@@ -114,21 +114,21 @@ header .my_info {
     border: 1px solid black;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 990px) {
     .home {
         background-color: lightpink;
     }
 }
-@media (max-width: 768px) {
+@media (max-width: 760px) {
     .home {
         background-color: lightyellow;
     }
 }
-@media (max-width: 576px) {
+@media (max-width: 650px) {
     .home {
         background-color: lightblue;
     }
     .myinfo-wrapper {
-        width: 100%;
+        width: 95%;
     }
 }
