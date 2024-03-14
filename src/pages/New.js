@@ -1,8 +1,4 @@
 const New = ({}) => {
-    return (
-        <div>
-            <p>new</p>
-        </div>
-    );
+    return <div></div>;
 };
 export default New;

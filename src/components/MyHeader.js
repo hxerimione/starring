@@ -19,6 +19,12 @@ const MyHeader = () => {
             >
                 info
             </div>
+            <div
+                className="new_btn"
+                onClick={() => navigate('/new')}
+            >
+                new
+            </div>
         </header>
     );
 };

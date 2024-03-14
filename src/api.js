@@ -25,7 +25,6 @@ const request = async (url) => {
         return response;
     } catch (error) {
         //응답 실패
-        console.log('hi');
         console.error(error);
     }
     // fetch(url).then((res) => {
@@ -49,6 +48,11 @@ export const api = {
     getDetail: (media, id) => {
         return request(`${API_ENDPOINT}/${media}/${id}?${LANGUAGE}`);
     },
+    // getDetail: async (media, id) => {
+    //     const resp = await fetch(`${API_ENDPOINT}/${media}/${id}?${LANGUAGE}`);
+    //     const contentDetail = await resp.json();
+    //     return contentDetail.results;
+    // },
 };
 
 export default request;
