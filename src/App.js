@@ -8,10 +8,10 @@ import Review from './pages/Review';
 import { createContext, useContext, useReducer, useRef } from 'react';
 
 const dummydata = [
-    { id: 1, contentId: 278, date: 1709189151220, review: 'review1' },
-    { id: 2, contentId: 238, date: 1709189151320, review: 'review2' },
-    { id: 3, contentId: 240, date: 1709189151420, review: 'review3' },
-    { id: 4, contentId: 19404, date: 1709189151520, review: 'review4' },
+    { id: 1, contentId: 278, review: 'review1', star: 2 },
+    { id: 2, contentId: 238, review: 'review2', star: 3 },
+    { id: 3, contentId: 240, review: 'review3', star: 5 },
+    { id: 4, contentId: 19404, review: 'review4', star: 2 },
 ];
 export const ReviewStateContext = createContext();
 export const ReviewDispatchContext = createContext();
@@ -46,12 +46,12 @@ function App() {
     const dataId = useRef(0);
 
     // onCreate
-    const onCreate = (date, review, star) => {
+    const onCreate = (review, star, contentId) => {
         dispatch({
             type: 'CREATE',
             data: {
                 id: dataId.current,
-                date: new Date(date).getTime(),
+                contentId,
                 review,
                 star,
             },
@@ -64,12 +64,12 @@ function App() {
     };
 
     /*onEdit*/
-    const onEdit = (targetId, date, review, star) => {
+    const onEdit = (targetId, contentId, review, star) => {
         dispatch({
             type: 'EDIT',
             data: {
                 id: targetId,
-                date: new Date(date).getTime(),
+                contentId,
                 review,
                 star,
             },
@@ -88,7 +88,7 @@ function App() {
                                 element={<Home />}
                             />
                             <Route
-                                path="/new/:id"
+                                path="/new"
                                 element={<New />}
                             />
                             <Route
