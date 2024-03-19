@@ -13,11 +13,11 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [isNew, setIsNew] = useState(false);
 
-    const targetReview = reviewList.filter((it) => it.contentId === contentId)[
-        '0'
-    ];
-    const [editReview, setEditReview] = useState(targetReview.review);
-    const [editStar, setEditStar] = useState(targetReview.star);
+    const targetReview = reviewList.find((it) => it.contentId === contentId);
+
+    const [editReview, setEditReview] = useState('');
+    const [editStar, setEditStar] = useState(0);
+
     const reviewInput = useRef();
     const [state, setState] = useState({
         review: '',
@@ -25,6 +25,13 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         contentId: contentId,
     });
 
+    useEffect(() => {
+        if (isEdit) {
+            console.log('hello');
+            setEditReview(targetReview.review);
+            setEditStar(targetReview.star);
+        }
+    }, [isEdit]);
     const handleChangeState = (e) => {
         setState({
             ...state,
@@ -32,6 +39,12 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         });
     };
 
+    const handleDelete = () => {
+        if (window.confirm('정말 삭제하시겠습니까?')) {
+            onRemove(targetReview.id);
+        }
+        console.log('remove');
+    };
     const handleEdit = () => {
         setIsEdit(false);
         if (editReview.length < 5) {
@@ -64,7 +77,7 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         setDetail(dummy);
     }, []);
 
-    console.log(reviewList);
+    console.log(isEdit);
     return (
         <div className="modal-background">
             <div className="modal">
@@ -76,7 +89,7 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                     <div>
                         <section className="content_detail">
                             <img
-                                crossOrigin="anonymous"
+                                // crossOrigin="anonymous"
                                 src={IMG_ENDPOINT + detail.poster_path}
                                 width="100px"
                             />
@@ -124,7 +137,9 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                         >
                                             수정하기
                                         </button>
-                                        <button>삭제하기</button>
+                                        <button onClick={handleDelete}>
+                                            삭제하기
+                                        </button>
                                     </>
                                 )}
                             </div>
