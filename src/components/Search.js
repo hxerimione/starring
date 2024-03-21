@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SearchResult from '../pages/SearchResult';
 
 const Search = ({}) => {
     const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const onChange = (e) => {
         setSearch(e.target.value);
-
-        if (e.key == 'Enter') {
-            console.log(search);
+    };
+    const onSearch = (e) => {
+        if (e.key === 'Enter') {
+            navigate(`/result?search=${search}`);
+            // navigate('/result', { state: { search: search } });
         }
     };
     return (
@@ -17,6 +20,7 @@ const Search = ({}) => {
             type="text"
             value={search}
             onChange={onChange}
+            onKeyDown={onSearch}
             placeholder="검색어를 입력하세요"
         />
     );

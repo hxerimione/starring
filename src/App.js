@@ -6,6 +6,7 @@ import MyInfo from './pages/MyInfo';
 import Edit from './pages/Edit';
 import Review from './pages/Review';
 import { createContext, useContext, useReducer, useRef } from 'react';
+import SearchResult from './pages/SearchResult';
 
 const dummydata = [
     { id: 1, contentId: 278, review: 'review1', star: 2 },
@@ -102,6 +103,10 @@ function App() {
                             <Route
                                 path="/review/:id"
                                 element={<Review />}
+                            />
+                            <Route
+                                path="/result"
+                                element={<SearchResult />}
                             />
                         </Routes>
                     </div>

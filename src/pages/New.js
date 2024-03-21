@@ -1,21 +1,59 @@
-import { Rating } from '@mui/material';
-import React, { useState } from 'react';
+import React, { Component } from 'react';
+import Slider from 'react-slick';
 
-const New = () => {
-    const [star, setStar] = useState(0);
-    console.log('star', star);
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
     return (
-        <div>
-            <Rating
-                name="simple-controlled"
-                // name="half-rating"
-                value={star}
-                precision={0.5}
-                onChange={(event, newValue) => {
-                    setStar(newValue);
-                }}
-            />
+        <div
+            className={className}
+            onClick={onClick}
+        />
+    );
+}
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            onClick={onClick}
+        />
+    );
+}
+
+function CustomArrows() {
+    const settings = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />,
+    };
+    return (
+        <div className="slider-container">
+            <Slider {...settings}>
+                <div>
+                    <h3>1</h3>
+                </div>
+                <div>
+                    <h3>2</h3>
+                </div>
+                <div>
+                    <h3>3</h3>
+                </div>
+                <div>
+                    <h3>4</h3>
+                </div>
+                <div>
+                    <h3>5</h3>
+                </div>
+                <div>
+                    <h3>6</h3>
+                </div>
+            </Slider>
         </div>
     );
-};
-export default New;
+}
+
+export default CustomArrows;

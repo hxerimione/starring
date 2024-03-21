@@ -11,10 +11,10 @@ const REQUEST_ERROR = {
 //     'Bearer ' + process.env.REACT_APP_AUTHORIZATION_KEY;
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-const request = async (url) => {
+const request = (url) => {
     try {
         //응답 성공
-        const response = await axios.get(url, {
+        const response = axios.get(url, {
             headers: {
                 Authorization:
                     'Bearer ' + process.env.REACT_APP_AUTHORIZATION_KEY,
@@ -34,10 +34,8 @@ const request = async (url) => {
 
 export const api = {
     //search
-    getSearch: (media, keyword) => {
-        return request(
-            `${API_ENDPOINT}/search/${media}/${keyword}?${LANGUAGE}`
-        );
+    getSearch: (keyword) => {
+        return request(`${API_ENDPOINT}/search/keyword?query=${keyword}`);
     },
     getTrending: (media) => {
         return request(`${API_ENDPOINT}/trending/${media}/week?${LANGUAGE}`);
