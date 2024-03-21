@@ -82,20 +82,25 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         <div className="modal-background">
             <div className="modal">
                 <button onClick={handleModalBtn}>x</button>
-                <p>pick content : {contentId}</p>
+
                 {/* content api 가져오기 (사진, 제목, 줄거리,..) */}
 
                 {detail && (
                     <div>
-                        <section className="content_detail">
-                            <img
-                                // crossOrigin="anonymous"
-                                src={IMG_ENDPOINT + detail.poster_path}
-                                width="100px"
-                            />
-                            <p>{detail.title}</p>
-                            <p>{detail.overview}</p>
-                        </section>
+                        <div className="content_detail">
+                            <section className="poster_wrapper">
+                                <img
+                                    className="content_poster"
+                                    // crossOrigin="anonymous"
+                                    src={IMG_ENDPOINT + detail.poster_path}
+                                    width="100px"
+                                />
+                            </section>
+                            <section className="content_description">
+                                <p>{detail.title}</p>
+                                <p>{detail.overview}</p>
+                            </section>
+                        </div>
                         {targetReview && (
                             <div className="review">
                                 {isEdit ? (

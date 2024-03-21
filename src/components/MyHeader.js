@@ -2,28 +2,26 @@ import { useNavigate } from 'react-router-dom';
 import Search from './Search';
 
 const MyHeader = () => {
+    const env = process.env;
+    env.PUBLIC_URL = env.PUBLIC_URL || '';
     const navigate = useNavigate();
     return (
         <header>
-            <h1
-                className="head_text"
+            <img
+                className="head_logo"
+                src={process.env.PUBLIC_URL + `/assets/starviewvalley.png`}
+                alt="logo"
                 onClick={() => navigate('/')}
-            >
-                Starring
-            </h1>
-            <Search />
+            />
+            <div className="search_info_wrapper">
+                <Search />
 
-            <div
-                className="my_info"
-                onClick={() => navigate('/myInfo')}
-            >
-                info
-            </div>
-            <div
-                className="new_btn"
-                onClick={() => navigate('/new')}
-            >
-                new
+                <div
+                    className="my_info"
+                    onClick={() => navigate('/myInfo')}
+                >
+                    INFO
+                </div>
             </div>
         </header>
     );
