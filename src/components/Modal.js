@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { api } from '../api';
 import { Rating } from '@mui/material';
 import { ReviewDispatchContext, ReviewStateContext } from '../App';
-import { MDBContainer, MDBRating } from 'mdbreact';
+
 import dummy from '../detaildummy.json';
 const IMG_ENDPOINT = 'https://image.tmdb.org/t/p/w200';
 
@@ -32,6 +32,9 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
             setEditStar(targetReview.star);
         }
     }, [isEdit]);
+    useEffect(() => {
+        onEdit(targetReview.id, contentId, targetReview.review, editStar);
+    }, [editStar]);
     const handleChangeState = (e) => {
         setState({
             ...state,
@@ -75,13 +78,19 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         //     setDetail(res.data)
         // );
         setDetail(dummy);
+        setEditStar(targetReview.star);
     }, []);
 
-    console.log(isEdit);
+    console.log(targetReview);
     return (
         <div className="modal-background">
             <div className="modal">
-                <button onClick={handleModalBtn}>x</button>
+                <button
+                    className="modal_close_btn"
+                    onClick={handleModalBtn}
+                >
+                    x
+                </button>
 
                 {/* content api 가져오기 (사진, 제목, 줄거리,..) */}
 
@@ -93,16 +102,32 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                     className="content_poster"
                                     // crossOrigin="anonymous"
                                     src={IMG_ENDPOINT + detail.poster_path}
-                                    width="100px"
                                 />
                             </section>
                             <section className="content_description">
-                                <p>{detail.title}</p>
-                                <p>{detail.overview}</p>
+                                <h3>{detail.title}</h3>
+                                <b>{detail.release_date}</b>
+                                {detail.genres.map((it) => (
+                                    <p key={it.id}>{it.name}</p>
+                                ))}
+                                <p className="detail_description">
+                                    {detail.overview}
+                                </p>
                             </section>
                         </div>
                         {targetReview && (
-                            <div className="review">
+                            <div className="review_wrapper">
+                                <Rating
+                                    className="star"
+                                    // name="star"
+                                    value={Number(editStar)}
+                                    precision={0.5}
+                                    defaultValue={targetReview.star}
+                                    // onChange={handleChangeState}
+                                    onChange={(event, newValue) => {
+                                        setEditStar(newValue);
+                                    }}
+                                />
                                 {isEdit ? (
                                     // 리뷰 있는데 수정할 때
                                     <>
@@ -112,40 +137,38 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                                 setEditReview(e.target.value)
                                             }
                                         />
-                                        <Rating
-                                            name="star"
-                                            value={Number(editStar)}
-                                            precision={0.5}
-                                            // onChange={handleChangeState}
-                                            onChange={(event, newValue) => {
-                                                setEditStar(newValue);
-                                            }}
-                                        />
-                                        <button onClick={handleEdit}>
+
+                                        <button
+                                            className="edit_btn"
+                                            onClick={handleEdit}
+                                        >
                                             수정 완료
                                         </button>
-                                        <button>취소</button>
+                                        <button className="cancel_btn">
+                                            취소
+                                        </button>
                                     </>
                                 ) : (
                                     // 리뷰 있고 수정안할 떄
-                                    <>
-                                        id : {targetReview.id}
-                                        <br />
-                                        star : {targetReview.star}
-                                        <br />
-                                        review : {targetReview.review}
-                                        <br />
+                                    <div>
+                                        <p className="review">
+                                            {targetReview.review}
+                                        </p>
                                         <button
+                                            className="edit_btn"
                                             onClick={() => {
                                                 setIsEdit(true);
                                             }}
                                         >
                                             수정하기
                                         </button>
-                                        <button onClick={handleDelete}>
+                                        <button
+                                            className="delete_btn"
+                                            onClick={handleDelete}
+                                        >
                                             삭제하기
                                         </button>
-                                    </>
+                                    </div>
                                 )}
                             </div>
                         )}
@@ -173,7 +196,7 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                         />
                                         <div>
                                             <button onClick={handleSubmit}>
-                                                일기 저장
+                                                후기 저장
                                             </button>
                                         </div>
                                     </>

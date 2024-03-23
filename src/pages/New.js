@@ -1,3 +1,4 @@
+import { Rating } from '@mui/material';
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 
@@ -32,6 +33,13 @@ function CustomArrows() {
     };
     return (
         <div className="slider-container">
+            <Rating
+                name="star"
+                value={1}
+                precision={0.5}
+                defaultValue={2.5}
+                // onChange={handleChangeState}
+            />
             <Slider {...settings}>
                 <div>
                     <h3>1</h3>

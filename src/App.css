@@ -151,8 +151,6 @@ header .my_info {
 }
 .modal {
     background-color: #f2f2f2;
-    /* width: 360px;
-    height: 330px; */
     width: 80vw;
     height: 80vh;
     z-index: 100;
@@ -164,20 +162,64 @@ header .my_info {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
     overflow: scroll;
 }
-.content_detail {
-    display: flex;
-}
-.content_poster {
-    padding: 10px 10px 10px 10px;
-}
-.content_poster {
-    width: 100px;
-    height: auto;
-}
-.review {
-    border: 1px solid black;
+.modal_close_btn {
+    float: right;
+    font-size: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
+.content_detail {
+    padding: 40px 0px 40px 0px;
+    display: flex;
+    justify-content: center;
+    /* text-align: center; */
+}
+.detail_description {
+    /* height: 50px; */
+}
+.poster_wrapper {
+    width: 20%;
+}
+.content_description {
+    width: 70%;
+    padding-left: 10px;
+}
+
+.content_poster {
+    width: 100%;
+    height: auto;
+    /* padding: 10px 10px 10px 10px; */
+    padding-right: 10px;
+}
+.review_wrapper {
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+
+    background-color: white;
+    border-radius: 20px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.edit_btn,
+.delete_btn,
+.cancel_btn {
+    margin: 10px 10px 10px 10px;
+    padding: 5px 5px 5px 5px;
+    background-color: #e5453c;
+    color: white;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+}
+.review {
+    margin: 10px 10px 10px 10px;
+    font-size: 18px;
+}
+.star {
+    margin: 10px 10px 10px 10px;
+}
 @media (min-width: 1035px) {
     .modal {
         width: 792px;
