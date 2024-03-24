@@ -24,7 +24,6 @@ const SearchResult = ({}) => {
             api.getSearch(keyword).then((res) =>
                 setContentList(res.data.results)
             );
-            console.log(typeof contentList);
         }
     }, [keyword]);
 

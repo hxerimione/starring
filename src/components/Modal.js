@@ -3,12 +3,11 @@ import { api } from '../api';
 import { Rating } from '@mui/material';
 import { ReviewDispatchContext, ReviewStateContext } from '../App';
 
-import dummy from '../detaildummy.json';
 const IMG_ENDPOINT = 'https://image.tmdb.org/t/p/w200';
 
 const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
     const [detail, setDetail] = useState(undefined);
-    const reviewList = useContext(ReviewStateContext);
+    // const reviewList = useContext(ReviewStateContext);
     const { onCreate, onEdit, onRemove } = useContext(ReviewDispatchContext);
     const [isEdit, setIsEdit] = useState(false);
     const [isNew, setIsNew] = useState(false);
@@ -66,7 +65,7 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
             alert('다섯글자이상');
             return;
         }
-        onEdit(targetReview.id, contentId, editReview, editStar);
+        onEdit(targetReview.id, contentId, editReview, editStar, contentMedia);
     };
     const handleSubmit = () => {
         if (state.review.length < 5) {

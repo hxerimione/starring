@@ -11,13 +11,6 @@ import {
 } from 'react';
 import SearchResult from './pages/SearchResult';
 
-const dummydata = [
-    { id: 1, contentId: 278, review: 'review1', star: 2 },
-    { id: 2, contentId: 238, review: 'review2', star: 3 },
-    { id: 3, contentId: 240, review: 'review3', star: 5 },
-    { id: 4, contentId: 19404, review: 'review4', star: 2 },
-];
-
 export const ReviewStateContext = createContext();
 export const ReviewDispatchContext = createContext();
 const reducer = (state, action) => {
@@ -43,7 +36,7 @@ const reducer = (state, action) => {
             // );
             localStorage.removeItem(action.contentId);
             console.log(action.contentId);
-            localStorage.setItem(action.contentId, action.data);
+            localStorage.setItem(action.contentId, action.data, action.media);
             break;
         }
         default:
@@ -57,8 +50,8 @@ function App() {
             278,
             JSON.stringify({
                 id: 0,
-                review: 'review1',
-                star: 2,
+                review: '쇼생크탈출 재밌어요',
+                star: 4,
                 media: 'movie',
             })
         );
@@ -66,7 +59,7 @@ function App() {
             238,
             JSON.stringify({
                 id: 1,
-                review: 'review2',
+                review: '대부 최고',
                 star: 2.5,
                 media: 'movie',
             })
@@ -74,7 +67,7 @@ function App() {
     }, []);
     const [data, dispatch] = useReducer(reducer, localStorage);
 
-    const dataId = useRef(0);
+    const dataId = useRef(2);
 
     // onCreate
     const onCreate = (review, star, contentId, media) => {
@@ -109,30 +102,28 @@ function App() {
         });
     };
     return (
-        <ReviewStateContext.Provider value={data}>
-            <ReviewDispatchContext.Provider
-                value={{ onCreate, onEdit, onRemove }}
-            >
-                <BrowserRouter>
-                    <div className="App">
-                        <Routes>
-                            <Route
-                                path="/"
-                                element={<Home />}
-                            />
-                            <Route
-                                path="/myInfo"
-                                element={<MyInfo />}
-                            />
-                            <Route
-                                path="/result"
-                                element={<SearchResult />}
-                            />
-                        </Routes>
-                    </div>
-                </BrowserRouter>
-            </ReviewDispatchContext.Provider>
-        </ReviewStateContext.Provider>
+        // <ReviewStateContext.Provider value={data}>
+        <ReviewDispatchContext.Provider value={{ onCreate, onEdit, onRemove }}>
+            <BrowserRouter>
+                <div className="App">
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={<Home />}
+                        />
+                        <Route
+                            path="/myInfo"
+                            element={<MyInfo />}
+                        />
+                        <Route
+                            path="/result"
+                            element={<SearchResult />}
+                        />
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </ReviewDispatchContext.Provider>
+        // </ReviewStateContext.Provider>
     );
 }
 
