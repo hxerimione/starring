@@ -5,7 +5,13 @@ import New from './pages/New';
 import MyInfo from './pages/MyInfo';
 import Edit from './pages/Edit';
 import Review from './pages/Review';
-import { createContext, useContext, useReducer, useRef } from 'react';
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useReducer,
+    useRef,
+} from 'react';
 import SearchResult from './pages/SearchResult';
 
 const dummydata = [
@@ -14,6 +20,7 @@ const dummydata = [
     { id: 3, contentId: 240, review: 'review3', star: 5 },
     { id: 4, contentId: 19404, review: 'review4', star: 2 },
 ];
+
 export const ReviewStateContext = createContext();
 export const ReviewDispatchContext = createContext();
 const reducer = (state, action) => {
@@ -23,17 +30,23 @@ const reducer = (state, action) => {
             return action.data;
         }
         case 'CREATE': {
-            newState = [action.data, ...state];
+            // newState = [action.data, ...state];
+            localStorage.setItem(action.contentId, action.data, action.media);
             break;
         }
         case 'REMOVE': {
-            newState = state.filter((it) => it.id != action.targetId);
+            localStorage.removeItem(action.targetId);
+            console.log(action.targetId);
+            // newState = state.filter((it) => it.id != action.targetId);
             break;
         }
         case 'EDIT': {
-            newState = state.map((it) =>
-                it.id === action.data.id ? { ...action.data } : it
-            );
+            // newState = state.map((it) =>
+            //     it.id === action.data.id ? { ...action.data } : it
+            // );
+            localStorage.removeItem(action.contentId);
+            console.log(action.contentId);
+            localStorage.setItem(action.contentId, action.data);
             break;
         }
         default:
@@ -42,20 +55,41 @@ const reducer = (state, action) => {
     return newState;
 };
 function App() {
-    const [data, dispatch] = useReducer(reducer, dummydata);
+    useEffect(() => {
+        localStorage.setItem(
+            278,
+            JSON.stringify({
+                id: 0,
+                review: 'review1',
+                star: 2,
+                media: 'movie',
+            })
+        );
+        localStorage.setItem(
+            238,
+            JSON.stringify({
+                id: 1,
+                review: 'review2',
+                star: 2.5,
+                media: 'movie',
+            })
+        );
+    }, []);
+    const [data, dispatch] = useReducer(reducer, localStorage);
 
     const dataId = useRef(0);
 
     // onCreate
-    const onCreate = (review, star, contentId) => {
+    const onCreate = (review, star, contentId, media) => {
         dispatch({
             type: 'CREATE',
-            data: {
+            contentId,
+            data: JSON.stringify({
                 id: dataId.current,
-                contentId,
                 review,
                 star,
-            },
+                media,
+            }),
         });
         dataId.current += 1;
     };
@@ -65,15 +99,16 @@ function App() {
     };
 
     /*onEdit*/
-    const onEdit = (targetId, contentId, review, star) => {
+    const onEdit = (targetId, contentId, review, star, media) => {
         dispatch({
             type: 'EDIT',
-            data: {
+            contentId,
+            data: JSON.stringify({
                 id: targetId,
-                contentId,
                 review,
                 star,
-            },
+                media,
+            }),
         });
     };
     return (

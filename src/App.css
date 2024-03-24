@@ -113,21 +113,28 @@ header .my_info {
 }
 
 .myinfo {
-    background-color: lightgray;
+    background-color: #f2f2f2;
 }
 
 .myinfo_wrapper {
     margin: 10px auto;
     max-width: 576px;
-    background-color: pink;
+    background-color: white;
+    border-radius: 20px;
     display: block;
 }
 .myinfo_section {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-bottom: none;
+}
+.myinfo_img_section {
+    width: 30%;
+}
+.myinfo_text_section {
+    width: 70%;
 }
 .mygraph_section {
     height: 200px;
@@ -136,9 +143,12 @@ header .my_info {
 }
 .mylist_section {
     height: 200px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
-
+.mylist_section h3 {
+    padding-left: 10px;
+    padding-top: 10px;
+}
 /* Modal */
 .modal-background {
     background-color: rgba(0, 0, 0, 0.4);
@@ -164,9 +174,16 @@ header .my_info {
 }
 .modal_close_btn {
     float: right;
-    font-size: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
+    font-size: 25px;
+    cursor: pointer;
+    /* padding-left: 5px; */
+    /* padding-top: 20px; */
+    /* padding-right: 25px; */
+    /* justify-content: center; */
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border: none;
 }
 
 .content_detail {
@@ -184,6 +201,9 @@ header .my_info {
 .content_description {
     width: 70%;
     padding-left: 10px;
+}
+.content_description p {
+    color: #848484;
 }
 
 .content_poster {
@@ -253,6 +273,45 @@ textarea {
     margin: 0 auto;
     margin-top: 30px;
 }
+/* info */
+.review_list {
+    display: grid;
+    grid-template-rows: 3;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px 10px 10px 10px;
+}
+.review_block {
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin: 5px 5px 5px 5px;
+    border-radius: 25px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f2f2;
+}
+/* footer */
+footer {
+    position: relative;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 16px;
+    /* bottom: 0; */
+    /* transform: translateY(-122px); */
+}
+footer nav {
+    margin: 10px 10px 10px 10px;
+}
+footer p span {
+    color: inherit;
+    margin: 10px 10px 10px 10px;
+}
+.footer-line {
+    border: 1px solid #cacaca;
+    margin-bottom: 16px;
+}
+
 @media (min-width: 1035px) {
     .modal {
         width: 792px;
