@@ -220,6 +220,18 @@ header .my_info {
 .star {
     margin: 10px 10px 10px 10px;
 }
+/* search result */
+.search_wrapper {
+    display: grid;
+    grid-template-rows: 4;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.search_content {
+    display: block;
+
+    margin: 0 auto;
+    margin-top: 30px;
+}
 @media (min-width: 1035px) {
     .modal {
         width: 792px;
@@ -228,6 +240,11 @@ header .my_info {
 @media (max-width: 835px) {
     .home {
         background-color: lightpink;
+    }
+    .search_wrapper {
+        display: grid;
+        grid-template-rows: 3;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 }
 @media (max-width: 760px) {
@@ -250,5 +267,10 @@ header .my_info {
     }
     header .my_info {
         width: 18%;
+    }
+    .search_wrapper {
+        display: grid;
+        grid-template-rows: 2;
+        grid-template-columns: 1fr 1fr;
     }
 }

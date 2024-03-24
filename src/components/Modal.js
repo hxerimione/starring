@@ -33,7 +33,9 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         }
     }, [isEdit]);
     useEffect(() => {
-        onEdit(targetReview.id, contentId, targetReview.review, editStar);
+        if (targetReview) {
+            onEdit(targetReview.id, contentId, targetReview.review, editStar);
+        }
     }, [editStar]);
     const handleChangeState = (e) => {
         setState({
@@ -78,7 +80,10 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         //     setDetail(res.data)
         // );
         setDetail(dummy);
-        setEditStar(targetReview.star);
+        if (targetReview) {
+            console.log('hihihihi');
+            setEditStar(targetReview.star);
+        }
     }, []);
 
     console.log(targetReview);

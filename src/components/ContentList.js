@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { api } from '../api';
-import Content from './Content';
-import MyButton from './MyButton';
 import dummyData from '../dummyData.json';
 import Modal from './Modal';
 import Slider from 'react-slick';

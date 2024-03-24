@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SearchResult from '../pages/SearchResult';
 
 const Search = ({}) => {
     const navigate = useNavigate();

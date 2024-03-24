@@ -35,7 +35,7 @@ const request = (url) => {
 export const api = {
     //search
     getSearch: (keyword) => {
-        return request(`${API_ENDPOINT}/search/keyword?query=${keyword}`);
+        return request(`${API_ENDPOINT}/search/multi?query=${keyword}`);
     },
     getTrending: (media) => {
         return request(`${API_ENDPOINT}/trending/${media}/week?${LANGUAGE}`);
