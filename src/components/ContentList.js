@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import dummyData from '../dummyData.json';
 import Modal from './Modal';
 import Slider from 'react-slick';
+import { api } from '../api';
 
 const API_ENDPOINT = 'https://image.tmdb.org/t/p/w200';
-const ContentList = ({ contentHeadText }) => {
+const ContentList = () => {
     const settings = {
         dots: true,
         arrows: true,
@@ -53,7 +54,18 @@ const ContentList = ({ contentHeadText }) => {
 
     // api 받아와서 데이터 띄워주기
     const dummy = dummyData;
-    const [data, setData] = useState(dummy);
+
+    const [tvData, setTvData] = useState(dummy);
+    const [movieData, setMovieData] = useState(dummy);
+
+    useEffect(() => {
+        api.getTrending('tv').then((res) =>
+            setTvData(res.data.results.slice(0, 12))
+        );
+        api.getTrending('movie').then((res) =>
+            setMovieData(res.data.results.slice(0, 12))
+        );
+    }, []);
     const [modalOpen, setModalOpen] = useState(false);
 
     const [pick, setPick] = useState(-1);
@@ -61,14 +73,13 @@ const ContentList = ({ contentHeadText }) => {
     const handleModalOpen = () => {
         setModalOpen(!modalOpen);
     };
-    useEffect(() => {
-        setData(dummy.slice(0, 12));
-    }, []);
+    // useEffect(() => {
+    //     setData(dummy.slice(0, 12));
+    // }, []);
 
     // console.log(data);
     return (
         <div className="content_list_wrapper">
-            <h2 className="content_head_text">{contentHeadText}</h2>
             {modalOpen && (
                 <Modal
                     handleModalBtn={handleModalOpen}
@@ -76,14 +87,37 @@ const ContentList = ({ contentHeadText }) => {
                     contentMedia={media} //movie or tv
                 />
             )}
-
+            <h2 className="content_head_text">이번주 인기 TV 시리즈</h2>
             <Slider {...settings}>
-                {data.map((it) => (
+                {tvData.map((it) => (
                     <div
                         className="content"
                         onClick={() => {
                             setModalOpen(true);
                             setPick(it.id);
+                            setMedia('tv');
+                        }}
+                        key={it.id}
+                    >
+                        <img
+                            src={API_ENDPOINT + it.poster_path}
+                            alt={it.title}
+                            width="200px"
+                            height="290px"
+                        />
+                        <h4>{it.name}</h4>
+                    </div>
+                ))}
+            </Slider>
+            <h2 className="content_head_text">이번주 인기 영화</h2>
+            <Slider {...settings}>
+                {movieData.map((it) => (
+                    <div
+                        className="content"
+                        onClick={() => {
+                            setModalOpen(true);
+                            setPick(it.id);
+                            setMedia('movie');
                         }}
                         key={it.id}
                     >

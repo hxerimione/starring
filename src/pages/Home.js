@@ -7,9 +7,8 @@ const Home = ({}) => {
         <div className="home">
             <MyHeader />
 
-            <ContentList contentHeadText={'추천 작품'} />
-            {/* <ContentList contentHeadText={'추천 영화'} />
-            <ContentList contentHeadText={'추천 드라마'} /> */}
+            <ContentList />
+
             <MyFooter />
         </div>
     );

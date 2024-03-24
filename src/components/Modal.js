@@ -13,7 +13,9 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [isNew, setIsNew] = useState(false);
 
-    const targetReview = reviewList.find((it) => it.contentId === contentId);
+    // const targetReview = reviewList.find((it) => it.contentId === contentId);
+
+    const targetReview = JSON.parse(localStorage.getItem(contentId));
 
     const [editReview, setEditReview] = useState('');
     const [editStar, setEditStar] = useState(0);
@@ -23,6 +25,7 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         review: '',
         star: 0,
         contentId: contentId,
+        contentMedia: contentMedia,
     });
 
     useEffect(() => {
@@ -34,7 +37,13 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
     }, [isEdit]);
     useEffect(() => {
         if (targetReview) {
-            onEdit(targetReview.id, contentId, targetReview.review, editStar);
+            onEdit(
+                targetReview.id,
+                contentId,
+                targetReview.review,
+                editStar,
+                contentMedia
+            );
         }
     }, [editStar]);
     const handleChangeState = (e) => {
@@ -46,7 +55,7 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
 
     const handleDelete = () => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
-            onRemove(targetReview.id);
+            onRemove(contentId);
         }
 
         setIsNew(false);
@@ -67,22 +76,22 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         }
         //데이터 저장 (추가해줘야함)
         // date, contentId, review, star
-        onCreate(state.review, state.star, state.contentId);
+        onCreate(state.review, state.star, state.contentId, state.contentMedia);
 
         setState({
             review: '',
             star: 0,
             contentId: contentId,
+            contentMedia: contentMedia,
         });
-        alert('저장 성공!!!!');
+        alert('저장하였습니다.');
     };
     useEffect(() => {
-        // api.getDetail(contentMedia, contentId).then((res) =>
-        //     setDetail(res.data)
-        // );
-        setDetail(dummy);
+        api.getDetail(contentMedia, contentId).then((res) =>
+            setDetail(res.data)
+        );
+        // setDetail(dummy);
         if (targetReview) {
-            console.log('hihihihi');
             setEditStar(targetReview.star);
         }
     }, []);
@@ -116,9 +125,9 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                 {detail.genres.map((it) => (
                                     <p key={it.id}>{it.name}</p>
                                 ))}
-                                <p className="detail_description">
+                                <i className="detail_descriition">
                                     {detail.overview}
-                                </p>
+                                </i>
                             </section>
                         </div>
                         {targetReview && (
