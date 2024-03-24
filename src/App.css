@@ -202,9 +202,18 @@ header .my_info {
     margin: 0 auto;
     margin-bottom: 30px;
 }
+.create_review {
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
 .edit_btn,
 .delete_btn,
-.cancel_btn {
+.cancel_btn,
+.write_btn,
+.save_btn {
     margin: 10px 10px 10px 10px;
     padding: 5px 5px 5px 5px;
     background-color: #e5453c;
@@ -217,14 +226,26 @@ header .my_info {
     margin: 10px 10px 10px 10px;
     font-size: 18px;
 }
+textarea {
+    font-size: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    padding: 20px;
+}
 .star {
     margin: 10px 10px 10px 10px;
 }
 /* search result */
 .search_wrapper {
     display: grid;
-    grid-template-rows: 4;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 5;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 .search_content {
     display: block;
@@ -235,6 +256,13 @@ header .my_info {
 @media (min-width: 1035px) {
     .modal {
         width: 792px;
+    }
+}
+@media (max-width: 1035px) {
+    .search_wrapper {
+        display: grid;
+        grid-template-rows: 4;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }
 @media (max-width: 835px) {

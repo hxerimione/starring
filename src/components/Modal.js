@@ -48,7 +48,8 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
             onRemove(targetReview.id);
         }
-        console.log('remove');
+
+        setIsNew(false);
     };
     const handleEdit = () => {
         setIsEdit(false);
@@ -127,7 +128,6 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                     // name="star"
                                     value={Number(editStar)}
                                     precision={0.5}
-                                    defaultValue={targetReview.star}
                                     // onChange={handleChangeState}
                                     onChange={(event, newValue) => {
                                         setEditStar(newValue);
@@ -178,29 +178,36 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                             </div>
                         )}
                         {!targetReview && (
-                            <div className="create-review">
+                            <div className="create_review">
+                                <Rating
+                                    className="star"
+                                    value={Number(state.star)}
+                                    precision={0.5}
+                                    // onChange={handleChangeState}
+                                    onChange={(event, newValue) => {
+                                        setEditStar(newValue);
+                                        setState({
+                                            ...state,
+                                            star: newValue,
+                                        });
+                                    }}
+                                />
                                 {isNew ? (
                                     // 새 리뷰 작성
                                     <>
-                                        <p>후기</p>
-                                        <input
+                                        <textarea
+                                            className="review_input"
                                             ref={reviewInput}
                                             name="review"
                                             value={state.review}
                                             onChange={handleChangeState}
                                         />
-                                        <Rating
-                                            name="star"
-                                            // name="half-rating"
-                                            value={Number(state.star)}
-                                            precision={0.5}
-                                            onChange={handleChangeState}
-                                            // onChange={(event, newValue) => {
-                                            //     handleChangeState(newValue);
-                                            // }}
-                                        />
+
                                         <div>
-                                            <button onClick={handleSubmit}>
+                                            <button
+                                                className="save_btn"
+                                                onClick={handleSubmit}
+                                            >
                                                 후기 저장
                                             </button>
                                         </div>
@@ -209,6 +216,7 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                     // 후기 작성버튼
                                     <>
                                         <button
+                                            className="write_btn"
                                             onClick={() => {
                                                 setIsNew(true);
                                             }}
