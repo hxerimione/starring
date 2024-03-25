@@ -95,7 +95,6 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         }
     }, []);
 
-    console.log(targetReview);
     return (
         <div className="modal-background">
             <div className="modal">
@@ -119,8 +118,17 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                 />
                             </section>
                             <section className="content_description">
-                                <h3>{detail.title}</h3>
-                                <b>{detail.release_date}</b>
+                                {detail.name ? (
+                                    <h3>{detail.name}</h3>
+                                ) : (
+                                    <h3>{detail.title}</h3>
+                                )}
+                                {detail.last_air_date ? (
+                                    <b>{detail.last_air_date}</b>
+                                ) : (
+                                    <b>{detail.release_date}</b>
+                                )}
+
                                 {detail.genres.map((it) => (
                                     <p key={it.id}>{it.name}</p>
                                 ))}
