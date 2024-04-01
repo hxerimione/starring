@@ -35,7 +35,6 @@ const reducer = (state, action) => {
             //     it.id === action.data.id ? { ...action.data } : it
             // );
             localStorage.removeItem(action.contentId);
-            console.log(action.contentId);
             localStorage.setItem(action.contentId, action.data, action.media);
             break;
         }
@@ -45,26 +44,44 @@ const reducer = (state, action) => {
     return newState;
 };
 function App() {
-    useEffect(() => {
-        localStorage.setItem(
-            278,
-            JSON.stringify({
-                id: 0,
-                review: '쇼생크탈출 재밌어요',
-                star: 4,
-                media: 'movie',
-            })
-        );
-        localStorage.setItem(
-            238,
-            JSON.stringify({
-                id: 1,
-                review: '대부 최고',
-                star: 2.5,
-                media: 'movie',
-            })
-        );
-    }, []);
+    localStorage.setItem(
+        278,
+        JSON.stringify({
+            id: 0,
+            review: '쇼생크탈출 재밌어요',
+            star: 4,
+            media: 'movie',
+        })
+    );
+    localStorage.setItem(
+        238,
+        JSON.stringify({
+            id: 1,
+            review: '대부 최고',
+            star: 2.5,
+            media: 'movie',
+        })
+    );
+    // useEffect(() => {
+    //     localStorage.setItem(
+    //         278,
+    //         JSON.stringify({
+    //             id: 0,
+    //             review: '쇼생크탈출 재밌어요',
+    //             star: 4,
+    //             media: 'movie',
+    //         })
+    //     );
+    //     localStorage.setItem(
+    //         238,
+    //         JSON.stringify({
+    //             id: 1,
+    //             review: '대부 최고',
+    //             star: 2.5,
+    //             media: 'movie',
+    //         })
+    //     );
+    // }, []);
     const [data, dispatch] = useReducer(reducer, localStorage);
 
     const dataId = useRef(2);

@@ -25,6 +25,7 @@ const SearchResult = ({}) => {
                 setContentList(res.data.results)
             );
         }
+        console.log('search');
     }, [keyword]);
 
     console.log(contentList);

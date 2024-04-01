@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { api } from '../api';
 import { Rating } from '@mui/material';
 import { ReviewDispatchContext, ReviewStateContext } from '../App';
@@ -11,40 +11,44 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
     const { onCreate, onEdit, onRemove } = useContext(ReviewDispatchContext);
     const [isEdit, setIsEdit] = useState(false);
     const [isNew, setIsNew] = useState(false);
-
-    // const targetReview = reviewList.find((it) => it.contentId === contentId);
-
     const targetReview = JSON.parse(localStorage.getItem(contentId));
 
-    const [editReview, setEditReview] = useState('');
-    const [editStar, setEditStar] = useState(0);
-
     const reviewInput = useRef();
-    const [state, setState] = useState({
-        review: '',
-        star: 0,
-        contentId: contentId,
-        contentMedia: contentMedia,
-    });
+    const [state, setState] = useState(
+        targetReview
+            ? {
+                  review: targetReview.review,
+                  star: targetReview.star,
+                  contentId: contentId,
+                  contentMedia: contentMedia,
+              }
+            : {
+                  review: '',
+                  star: 0,
+                  contentId: contentId,
+                  contentMedia: contentMedia,
+              }
+    );
 
-    useEffect(() => {
-        if (isEdit) {
-            console.log('hello');
-            setEditReview(targetReview.review);
-            setEditStar(targetReview.star);
-        }
-    }, [isEdit]);
     useEffect(() => {
         if (targetReview) {
             onEdit(
                 targetReview.id,
                 contentId,
                 targetReview.review,
-                editStar,
+                state.star,
                 contentMedia
             );
+        } else if (state.star > 0) {
+            onCreate(
+                state.review,
+                state.star,
+                state.contentId,
+                state.contentMedia
+            );
         }
-    }, [editStar]);
+        console.log('edit star');
+    }, [state.star]);
     const handleChangeState = (e) => {
         setState({
             ...state,
@@ -61,11 +65,17 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
     };
     const handleEdit = () => {
         setIsEdit(false);
-        if (editReview.length < 5) {
-            alert('다섯글자이상');
+        if (state.review.length < 5) {
+            alert('다섯글자 이상으로 작성하세요');
             return;
         }
-        onEdit(targetReview.id, contentId, editReview, editStar, contentMedia);
+        onEdit(
+            targetReview.id,
+            contentId,
+            state.review,
+            state.star,
+            contentMedia
+        );
     };
     const handleSubmit = () => {
         if (state.review.length < 5) {
@@ -86,15 +96,16 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         alert('저장하였습니다.');
     };
     useEffect(() => {
-        api.getDetail(contentMedia, contentId).then((res) =>
-            setDetail(res.data)
-        );
-        // setDetail(dummy);
-        if (targetReview) {
-            setEditStar(targetReview.star);
-        }
+        api.getDetail(contentMedia, contentId).then((res) => {
+            setDetail(res.data);
+        });
     }, []);
 
+    // useMemo(() => {
+    //     api.getDetail(contentMedia, contentId).then((res) => {
+    //         setDetail(res.data);
+    //     });
+    // }, []);
     return (
         <div className="modal-background">
             <div className="modal">
@@ -142,20 +153,26 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                 <Rating
                                     className="star"
                                     // name="star"
-                                    value={Number(editStar)}
+                                    value={Number(state.star)}
                                     precision={0.5}
                                     // onChange={handleChangeState}
                                     onChange={(event, newValue) => {
-                                        setEditStar(newValue);
+                                        setState({
+                                            ...state,
+                                            star: newValue,
+                                        });
                                     }}
                                 />
                                 {isEdit ? (
                                     // 리뷰 있는데 수정할 때
                                     <>
                                         <textarea
-                                            value={editReview}
+                                            value={state.review}
                                             onChange={(e) =>
-                                                setEditReview(e.target.value)
+                                                setState({
+                                                    ...state,
+                                                    review: e.target.value,
+                                                })
                                             }
                                         />
 
@@ -201,7 +218,6 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                     precision={0.5}
                                     // onChange={handleChangeState}
                                     onChange={(event, newValue) => {
-                                        setEditStar(newValue);
                                         setState({
                                             ...state,
                                             star: newValue,
