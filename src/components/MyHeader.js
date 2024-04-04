@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Search from './Search';
 
@@ -26,4 +27,4 @@ const MyHeader = () => {
         </header>
     );
 };
-export default MyHeader;
+export default React.memo(MyHeader);

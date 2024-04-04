@@ -23,11 +23,6 @@ const MyInfo = ({}) => {
     while (i--) {
         reviews.push([keys[i], JSON.parse(localStorage.getItem(keys[i]))]);
     }
-    // useEffect(() => {
-    //     reviews.map((it) => {
-    //         console.log(it[0]);
-    //     });
-    // }, [reviews]);
     return (
         <div className="myinfo">
             <MyHeader searchKeyword={'검색어를 입력하세요'} />
