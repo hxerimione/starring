@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Search from './Search';
 
 const MyHeader = () => {
     const env = process.env;
     env.PUBLIC_URL = env.PUBLIC_URL || '';
     const navigate = useNavigate();
+    console.log('header');
     return (
         <header>
             <img
@@ -23,6 +24,7 @@ const MyHeader = () => {
                 >
                     INFO
                 </div>
+                <Link to="/myInfo">INFO</Link>
             </div>
         </header>
     );

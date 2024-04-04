@@ -31,7 +31,6 @@ const SearchResult = ({}) => {
     console.log(contentList);
     return (
         <div>
-            <MyHeader />
             <div className="search_wrapper">
                 {modalOpen && (
                     <Modal
@@ -60,7 +59,6 @@ const SearchResult = ({}) => {
                         </div>
                     ))}
             </div>
-            <MyFooter />
         </div>
     );
 };

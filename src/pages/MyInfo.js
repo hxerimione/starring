@@ -1,5 +1,5 @@
 import { Rating } from '@mui/material';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
 import MyFooter from '../components/MyFooter';
 import MyHeader from '../components/MyHeader';
@@ -25,7 +25,6 @@ const MyInfo = ({}) => {
     }
     return (
         <div className="myinfo">
-            <MyHeader searchKeyword={'검색어를 입력하세요'} />
             <div className="myinfo_wrapper">
                 <section className="myinfo_section">
                     <section className="myinfo_img_section">
@@ -78,8 +77,7 @@ const MyInfo = ({}) => {
                     )}
                 </section>
             </div>
-            <MyFooter />
         </div>
     );
 };
-export default MyInfo;
+export default React.memo(MyInfo);

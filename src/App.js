@@ -10,6 +10,7 @@ import {
     useRef,
 } from 'react';
 import SearchResult from './pages/SearchResult';
+import MyHeader from './components/MyHeader';
 
 export const ReviewStateContext = createContext();
 export const ReviewDispatchContext = createContext();
@@ -123,6 +124,7 @@ function App() {
         <ReviewDispatchContext.Provider value={{ onCreate, onEdit, onRemove }}>
             <BrowserRouter>
                 <div className="App">
+                    <MyHeader />
                     <Routes>
                         <Route
                             path="/"
