@@ -347,14 +347,14 @@ footer p span {
     .myinfo-wrapper {
         width: 100%;
     }
-    .head_logo {
+    /* .head_logo {
         display: none;
     }
     header .search_keyword {
         width: 82%;
-    }
+    } */
     header .my_info {
-        width: 18%;
+        width: 22%;
     }
     .search_wrapper {
         display: grid;
