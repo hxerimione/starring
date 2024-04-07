@@ -55,8 +55,8 @@ const ContentList = () => {
     // api 받아와서 데이터 띄워주기
     const dummy = dummyData;
 
-    const [tvData, setTvData] = useState(dummy);
-    const [movieData, setMovieData] = useState(dummy);
+    const [tvData, setTvData] = useState('');
+    const [movieData, setMovieData] = useState('');
 
     useEffect(() => {
         api.getTrending('tv').then((res) =>
@@ -73,11 +73,7 @@ const ContentList = () => {
     const handleModalOpen = () => {
         setModalOpen(!modalOpen);
     };
-    // useEffect(() => {
-    //     setData(dummy.slice(0, 12));
-    // }, []);
-
-    // console.log(data);
+    console.log('contentlist');
     return (
         <div className="content_list_wrapper">
             {modalOpen && (
@@ -89,49 +85,74 @@ const ContentList = () => {
             )}
             <h2 className="content_head_text">이번주 인기 TV 시리즈</h2>
             <Slider {...settings}>
-                {tvData.map((it) => (
-                    <div
-                        className="content"
-                        onClick={() => {
-                            setModalOpen(true);
-                            setPick(it.id);
-                            setMedia('tv');
-                        }}
-                        key={it.id}
-                    >
-                        <img
-                            src={API_ENDPOINT + it.poster_path}
-                            alt={it.title}
-                            width="200px"
-                            height="290px"
-                        />
-                        <h4>{it.name}</h4>
+                {tvData ? (
+                    tvData.map((it) => (
+                        <div
+                            className="content"
+                            onClick={() => {
+                                setModalOpen(true);
+                                setPick(it.id);
+                                setMedia('tv');
+                            }}
+                            key={it.id}
+                        >
+                            <img
+                                src={API_ENDPOINT + it.poster_path}
+                                alt={it.title}
+                                width="200px"
+                                height="290px"
+                            />
+                            <h4>{it.name}</h4>
+                        </div>
+                    ))
+                ) : (
+                    <div className="content">
+                        <div
+                            style={{
+                                width: '200px',
+                                height: '200px',
+                                background: 'gray',
+                            }}
+                        ></div>
                     </div>
-                ))}
+                )}
             </Slider>
             <h2 className="content_head_text">이번주 인기 영화</h2>
             <Slider {...settings}>
-                {movieData.map((it) => (
-                    <div
-                        className="content"
-                        onClick={() => {
-                            setModalOpen(true);
-                            setPick(it.id);
-                            setMedia('movie');
-                        }}
-                        key={it.id}
-                    >
-                        <img
-                            src={API_ENDPOINT + it.poster_path}
-                            alt={it.title}
-                            width="200px"
-                            height="290px"
-                        />
-                        <h4>{it.title}</h4>
+                {movieData ? (
+                    movieData.map((it) => (
+                        <div
+                            className="content"
+                            onClick={() => {
+                                setModalOpen(true);
+                                setPick(it.id);
+                                setMedia('movie');
+                            }}
+                            key={it.id}
+                        >
+                            <img
+                                src={API_ENDPOINT + it.poster_path}
+                                alt={it.title}
+                                width="200px"
+                                height="290px"
+                            />
+                            <h4>{it.title}</h4>
+                        </div>
+                    ))
+                ) : (
+                    <div className="content">
+                        <div
+                            style={{
+                                width: '200px',
+                                height: '290px',
+                                background: 'gray',
+                            }}
+                        ></div>
                     </div>
-                ))}
+                )}
             </Slider>
         </div>
     );
 };
+
 export default ContentList;
