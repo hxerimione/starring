@@ -1,10 +1,9 @@
 import { Rating } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
-import MyFooter from '../components/MyFooter';
-import MyHeader from '../components/MyHeader';
+import StarRating from '../components/StarRating';
 
-const MyInfo = ({}) => {
+const MyInfo = () => {
     const env = process.env;
     env.PUBLIC_URL = env.PUBLIC_URL || '';
     const [modalOpen, setModalOpen] = useState(false);
@@ -23,6 +22,8 @@ const MyInfo = ({}) => {
     while (i--) {
         reviews.push([keys[i], JSON.parse(localStorage.getItem(keys[i]))]);
     }
+
+    console.log('info', reviews);
     return (
         <div className="myinfo">
             <div className="myinfo_wrapper">
@@ -62,12 +63,9 @@ const MyInfo = ({}) => {
                                     }}
                                 >
                                     <b>{review[1].review}</b>
-                                    <Rating
-                                        className="star"
-                                        size="small"
-                                        precision={0.5}
-                                        defaultValue={review[1].star}
-                                        readOnly
+                                    <StarRating
+                                        star={review[1].star}
+                                        readOnly={true}
                                     />
                                 </div>
                             ))}

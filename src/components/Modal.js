@@ -1,7 +1,15 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 import { api } from '../api';
 import { Rating } from '@mui/material';
 import { ReviewDispatchContext, ReviewStateContext } from '../App';
+import StarRating from './StarRating';
 
 const IMG_ENDPOINT = 'https://image.tmdb.org/t/p/w200';
 
@@ -12,48 +20,47 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [isNew, setIsNew] = useState(false);
     const targetReview = JSON.parse(localStorage.getItem(contentId));
-
     const reviewInput = useRef();
+    const [star, setStar] = useState(targetReview ? targetReview.star : 0);
     const [state, setState] = useState(
         targetReview
             ? {
                   review: targetReview.review,
-                  star: targetReview.star,
                   contentId: contentId,
                   contentMedia: contentMedia,
               }
             : {
                   review: '',
-                  star: 0,
                   contentId: contentId,
                   contentMedia: contentMedia,
               }
     );
-
+    console.log(targetReview);
     useEffect(() => {
         if (targetReview) {
             onEdit(
                 targetReview.id,
                 contentId,
                 targetReview.review,
-                state.star,
+                star,
                 contentMedia
             );
-        } else if (state.star > 0) {
-            onCreate(
-                state.review,
-                state.star,
-                state.contentId,
-                state.contentMedia
-            );
+        } else if (star > 0) {
+            onCreate(state.review, star, state.contentId, state.contentMedia);
         }
-        console.log('edit star');
-    }, [state.star]);
+        console.log('edit star', star);
+    }, [star]);
+    const handleChangeStar = useCallback((e) => {
+        setStar(Number(e.target.value));
+        onEdit(targetReview.id, contentId, state.review, star, contentMedia);
+        console.log('handleChangeStar');
+    }, []);
     const handleChangeState = (e) => {
         setState({
             ...state,
             [e.target.name]: e.target.value,
         });
+        console.log('handleChangeState');
     };
 
     const handleDelete = () => {
@@ -69,13 +76,7 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
             alert('다섯글자 이상으로 작성하세요');
             return;
         }
-        onEdit(
-            targetReview.id,
-            contentId,
-            state.review,
-            state.star,
-            contentMedia
-        );
+        onEdit(targetReview.id, contentId, state.review, star, contentMedia);
     };
     const handleSubmit = () => {
         if (state.review.length < 5) {
@@ -85,14 +86,15 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         }
         //데이터 저장 (추가해줘야함)
         // date, contentId, review, star
-        onCreate(state.review, state.star, state.contentId, state.contentMedia);
+        onCreate(state.review, star, state.contentId, state.contentMedia);
 
         setState({
             review: '',
-            star: 0,
+
             contentId: contentId,
             contentMedia: contentMedia,
         });
+        setStar(0);
         alert('저장하였습니다.');
     };
     useEffect(() => {
@@ -101,11 +103,6 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         });
     }, []);
 
-    // useMemo(() => {
-    //     api.getDetail(contentMedia, contentId).then((res) => {
-    //         setDetail(res.data);
-    //     });
-    // }, []);
     return (
         <div className="modal-background">
             <div className="modal">
@@ -150,30 +147,28 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                         </div>
                         {targetReview && (
                             <div className="review_wrapper">
-                                <Rating
+                                {/* <Rating
                                     className="star"
-                                    // name="star"
-                                    value={Number(state.star)}
+                                    value={Number(star)}
+                                    defaultValue={0}
                                     precision={0.5}
-                                    // onChange={handleChangeState}
-                                    onChange={(event, newValue) => {
-                                        setState({
-                                            ...state,
-                                            star: newValue,
-                                        });
-                                    }}
+                                    onChange={handleChangeStar}
+                                /> */}
+                                <StarRating
+                                    star={star}
+                                    onChange={handleChangeStar}
                                 />
                                 {isEdit ? (
                                     // 리뷰 있는데 수정할 때
                                     <>
                                         <textarea
                                             value={state.review}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 setState({
                                                     ...state,
                                                     review: e.target.value,
-                                                })
-                                            }
+                                                });
+                                            }}
                                         />
 
                                         <button
@@ -212,17 +207,16 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                         )}
                         {!targetReview && (
                             <div className="create_review">
-                                <Rating
+                                {/* <Rating
                                     className="star"
-                                    value={Number(state.star)}
+                                    value={Number(star)}
+                                    defaultValue={0}
                                     precision={0.5}
-                                    // onChange={handleChangeState}
-                                    onChange={(event, newValue) => {
-                                        setState({
-                                            ...state,
-                                            star: newValue,
-                                        });
-                                    }}
+                                    onChange={handleChangeStar}
+                                /> */}
+                                <StarRating
+                                    star={star}
+                                    onChange={handleChangeStar}
                                 />
                                 {isNew ? (
                                     // 새 리뷰 작성
@@ -232,7 +226,13 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
                                             ref={reviewInput}
                                             name="review"
                                             value={state.review}
-                                            onChange={handleChangeState}
+                                            onChange={(e) =>
+                                                setState({
+                                                    ...state,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                         />
 
                                         <div>
@@ -265,4 +265,4 @@ const Modal = ({ handleModalBtn, contentId, contentMedia }) => {
         </div>
     );
 };
-export default Modal;
+export default React.memo(Modal);

@@ -24,7 +24,6 @@ const MyHeader = () => {
                 >
                     INFO
                 </div>
-                <Link to="/myInfo">INFO</Link>
             </div>
         </header>
     );

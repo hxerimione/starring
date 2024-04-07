@@ -1,4 +1,7 @@
+import React from 'react';
+
 const MyFooter = ({}) => {
+    console.log('footer');
     return (
         <footer>
             <div className="footer-line"></div>
@@ -26,4 +29,5 @@ const MyFooter = ({}) => {
         </footer>
     );
 };
-export default MyFooter;
+
+export default React.memo(MyFooter);
